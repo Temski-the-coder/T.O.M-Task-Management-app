@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import appIcon from "/app_icon.png";
 import { useAuth } from "../../contexts/AuthContext";
 import { FaUserCircle } from "react-icons/fa";
 
@@ -11,15 +12,21 @@ const Navbar = () => {
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const [profile, setProfile] = useState({ name: "User", profilePic: "", role: "user" });
+  const [profile, setProfile] = useState({
+    name: "User",
+    profilePic: "",
+    role: "user",
+  });
 
   useEffect(() => {
     // Check if user is in admin or user portal
     const isAdminPortal = location.pathname.startsWith("/admin");
 
     // Load correct profile from localStorage
-    const storedProfile = JSON.parse(localStorage.getItem(isAdminPortal ? "adminProfile" : "userProfile"));
-    
+    const storedProfile = JSON.parse(
+      localStorage.getItem(isAdminPortal ? "adminProfile" : "userProfile")
+    );
+
     if (storedProfile) {
       setProfile({
         name: storedProfile.name || "User",
@@ -73,7 +80,11 @@ const Navbar = () => {
         onClick={handleLogoClick}
         className="flex items-center text-3xl font-bold tracking-wide hover:opacity-70 transition"
       >
-        <img src="/app_icon.png" alt="TaskFlow Logo" className="w-12 h-12 rounded-full mr-2" />
+        <img
+          src={appIcon}
+          alt="TaskFlow Logo"
+          className="w-12 h-12 rounded-full mr-2"
+        />
         TaskFlow
       </Link>
 
@@ -104,7 +115,11 @@ const Navbar = () => {
                 <ul className="text-gray-700">
                   <li>
                     <Link
-                      to={profile.role === "admin" ? "/admin/profile" : "/user/profile"}
+                      to={
+                        profile.role === "admin"
+                          ? "/admin/profile"
+                          : "/user/profile"
+                      }
                       className="block px-4 py-2 hover:bg-gray-200 transition"
                       onClick={() => setDropdownOpen(false)}
                     >
